@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omnimath.dev - Apprentissage Mathématique Innovant</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#0284c7',
+                            darkblue: '#0f172a',
+                            green: '#16a34a',
+                            emerald: '#10b981',
+                            accent: '#38bdf8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- KaTeX CDN pour le rendu des formules mathématiques -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #4ade80 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #0284c7 0%, #16a34a 100%);
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        @keyframes fly-loop {
+            0% { transform: translate(0, 0) scale(1); }
+            30% { transform: translate(60px, -150px) scale(1.1) rotate(10deg); }
+            60% { transform: translate(-60px, -250px) scale(0.9) rotate(-10deg); }
+            100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+        }
+        .animate-fly-visible {
+            animation: fly-loop 2.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .combo-fire {
+            animation: pulse-fire 0.8s infinite alternate;
+        }
+        @keyframes pulse-fire {
+            0% { transform: scale(1); filter: drop-shadow(0 0 5px #f59e0b); }
+            100% { transform: scale(1.08); filter: drop-shadow(0 0 18px #ef4444); }
+        }
+        /* Style des cases style grille mathématique */
+        .math-grid-cell {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #334155;
+            background-color: #0f172a;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #f8fafc;
+        }
+        .math-grid-cell.empty {
+            border-style: dashed;
+            border-color: #38bdf8;
+            background-color: #1e293b;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- BARRE DE NAVIGATION -->
+    <nav class="sticky top-0 z-50 glass-card border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo & Brand Name -->
+                <div class="flex items-center space-x-3" id="main-logo-container">
+                    <div class="w-12 h-12 rounded-full gradient-bg p-0.5 flex items-center justify-center shadow-lg shadow-emerald-500/20 transition-transform duration-300 hover:scale-105" id="nav-owl-logo">
+                        <!-- SVG Logo Fidèle (Mascotte Locky + Ardoise + Livre + Symboles) -->
+                        <svg class="w-9 h-9 text-white" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Livre Vert en bas -->
+                            <rect x="25" y="75" width="50" height="12" rx="3" fill="#15803d" stroke="#052e16" stroke-width="2"/>
+                            <rect x="28" y="83" width="44" height="3" fill="#e2e8f0"/>
+                            <!-- Mascotte Chouette -->
+                            <path d="M50 25C35 25 25 38 25 58C25 74 36 78 50 78C64 78 75 74 75 58C75 38 65 25 50 25Z" fill="#15803d"/>
+                            <path d="M36 45C36 38 42 34 50 34C58 34 64 38 64 45V68C64 68 56 74 50 74C44 74 36 68 36 68V45Z" fill="#f8fafc"/>
+                            <!-- Plumes du torse -->
+                            <path d="M44 52C46 55 54 55 56 52M42 59C45 62 55 62 58 59" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+                            <!-- Mortier / Chapeau -->
+                            <polygon points="50,15 78,26 50,37 22,26" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+                            <rect x="38" y="28" width="24" height="6" fill="#0f172a"/>
+                            <path d="M72 27V40" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="72" cy="42" r="2" fill="#fbbf24"/>
+                            <!-- Yeux -->
+                            <circle cx="40" cy="46" r="8" fill="white" stroke="#0f172a" stroke-width="1.5"/>
+                            <circle cx="60" cy="46" r="8" fill="white" stroke="#0f172a" stroke-width="1.5"/>
+                            <circle cx="40" cy="46" r="4" fill="#0f172a"/>
+                            <circle cx="60" cy="46" r="4" fill="#0f172a"/>
+                            <circle cx="42" cy="44" r="1.5" fill="white"/>
+                            <circle cx="62" cy="44" r="1.5" fill="white"/>
+                            <!-- Bec -->
+                            <polygon points="50,48 45,55 55,55" fill="#f59e0b"/>
+                            <!-- Ailes tenant l'ardoise -->
+                            <path d="M25 52L15 42C12 40 10 46 14 50L25 60" fill="#16a34a"/>
+                            <!-- Ardoise / Calculatrice -->
+                            <rect x="8" y="32" width="16" height="22" rx="2" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+                            <rect x="10" y="34" width="12" height="5" fill="#0284c7"/>
+                            <circle cx="11" cy="42" r="1" fill="#4ade80"/><circle cx="16" cy="42" r="1" fill="#4ade80"/><circle cx="21" cy="42" r="1" fill="#4ade80"/>
+                            <circle cx="11" cy="46" r="1" fill="#38bdf8"/><circle cx="16" cy="46" r="1" fill="#38bdf8"/><circle cx="21" cy="46" r="1" fill="#38bdf8"/>
+                            <circle cx="11" cy="50" r="1" fill="#fbbf24"/><circle cx="16" cy="50" r="1" fill="#fbbf24"/><circle cx="21" cy="50" r="1" fill="#fbbf24"/>
+                            <!-- Symboles autour (Sigma, Intégrale, ?, +) -->
+                            <path d="M46 10H54L48 15L54 20H46" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <text x="78" y="20" fill="#4ade80" font-size="12" font-weight="bold">?</text>
+                            <text x="18" y="22" fill="#fbbf24" font-size="10" font-weight="bold">+</text>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold tracking-tight text-white">OMNIMATH<span class="text-sky-400">.dev</span></span>
+                        <span class="hidden sm:inline-block text-xs text-emerald-400 font-medium ml-2 px-2 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-800">EdTech Comores</span>
+                    </div>
+                </div>
+
+                <!-- Nav Links (Desktop) -->
+                <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                    <a href="#application" class="hover:text-emerald-400 transition-colors">Math Quiz Comores</a>
+                    <a href="#lecons" class="hover:text-emerald-400 transition-colors">Leçons & Cours</a>
+                    <a href="#demo" class="hover:text-emerald-400 transition-colors">Démo Quiz</a>
+                    <a href="#a-propos" class="hover:text-emerald-400 transition-colors">À Propos</a>
+                    <a href="#communaute" class="hover:text-emerald-400 transition-colors">Communauté</a>
+                </div>
+
+                <!-- CTA Button -->
+                <div>
+                    <a href="#telecharger" class="px-4 py-2 text-xs sm:text-sm font-semibold text-slate-950 bg-gradient-to-r from-sky-400 to-emerald-400 rounded-xl hover:shadow-lg hover:shadow-emerald-500/25 transition-all transform hover:-translate-y-0.5">
+                        Obtenir l'APK
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SECTION HERO -->
+    <header class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28 bg-grid-pattern">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+        <div class="absolute top-1/3 left-1/3 w-80 h-80 bg-sky-500/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            
+            <!-- Badge -->
+            <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-700 text-xs text-slate-300 mb-6">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Plateforme Fondée & Développée par Fazad Nassur</span>
+            </div>
+
+            <!-- Main Heading -->
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6">
+                Apprentissage Mathématique <br class="hidden sm:inline" />
+                <span class="gradient-text">Du Collège à l'Université</span>
+            </h1>
+
+            <p class="max-w-3xl mx-auto text-base sm:text-lg text-slate-300 mb-10 leading-relaxed">
+                Omnimath.dev transforme l'apprentissage des mathématiques aux Comores grâce à des parcours interactifs, des cours structurés par niveau et un entraînement intelligent fonctionnant 100% hors-ligne.
+            </p>
+
+            <!-- Buttons -->
+            <div id="telecharger" class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#" onclick="alert('Le lien direct de téléchargement de l\'APK Math Quiz Comores sera actif dès la mise en ligne finale sur GitHub !'); return false;" class="w-full sm:w-auto px-8 py-4 rounded-2xl font-bold text-slate-950 bg-gradient-to-r from-sky-400 to-emerald-400 hover:from-sky-300 hover:to-emerald-300 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 transition-all transform hover:-translate-y-1 flex items-center justify-center space-x-3">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.523 15.3414C17.0602 15.3414 16.6834 14.9646 16.6834 14.5018C16.6834 14.039 17.0602 13.6622 17.523 13.6622C17.9858 13.6622 18.3626 14.039 18.3626 14.5018C18.3626 14.9646 17.9858 15.3414 17.523 15.3414ZM6.477 15.3414C6.0142 15.3414 5.6374 14.9646 5.6374 14.5018C5.6374 14.039 6.0142 13.6622 6.477 13.6622C6.9398 13.6622 7.3166 14.039 7.3166 14.5018C7.3166 14.9646 6.9398 15.3414 6.477 15.3414ZM17.9738 9.8732L19.5768 7.0968C19.689 6.9026 19.6226 6.6548 19.4284 6.5426C19.2342 6.4304 18.9864 6.4968 18.8742 6.691L17.2332 9.5332C15.6568 8.8134 13.882 8.409 12 8.409C10.118 8.409 8.3432 8.8134 6.7668 9.5332L5.1258 6.691C5.0136 6.4968 4.7658 6.4304 4.5716 6.5426C4.3774 6.6548 4.311 6.9026 4.4232 7.0968L6.0262 9.8732C2.6288 11.724 0.3234 15.176 0 19.2H24C23.6766 15.176 21.3712 11.724 17.9738 9.8732Z"/>
+                    </svg>
+                    <span>Télécharger l'APK Android</span>
+                </a>
+                
+                <a href="#lecons" class="w-full sm:w-auto px-8 py-4 rounded-2xl font-semibold text-white glass-card hover:bg-slate-800/80 transition-all flex items-center justify-center space-x-2 border border-slate-700">
+                    <span>Explorer le catalogue de cours</span>
+                    <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Stats/Trust badges -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-8 border-t border-slate-800/60">
+                <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800">
+                    <p class="text-2xl font-bold text-sky-400">100%</p>
+                    <p class="text-xs text-slate-400 mt-1">Gratuit & Sans Publicités</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800">
+                    <p class="text-2xl font-bold text-emerald-400">Hors-Ligne</p>
+                    <p class="text-xs text-slate-400 mt-1">Accès permanent sans données</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800">
+                    <p class="text-2xl font-bold text-sky-400">Collège → L2</p>
+                    <p class="text-xs text-slate-400 mt-1">Du secondaire au supérieur</p>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800">
+                    <p class="text-2xl font-bold text-emerald-400">KaTeX</p>
+                    <p class="text-xs text-slate-400 mt-1">Rendu de formules rigoureux</p>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- PRESENTATION APPLICATION MOBILE -->
+    <section id="application" class="py-16 bg-slate-900/50 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold tracking-widest text-emerald-400 uppercase mb-2">Notre Produit Phare</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">L'Application "Math Quiz Comores"</p>
+                <p class="text-slate-400 mt-4">Conçue pour transformer les révisions de mathématiques en un entraînement stimulant, ludique et gratifiant.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="glass-card p-6 rounded-2xl hover:border-emerald-500/40 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Quiz Génératifs & Adaptatifs</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Chaque session génère des exercices ajustés selon le niveau (arithmétique, géométrie, analyse, algèbre linéaire). Fini la répétition !
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="glass-card p-6 rounded-2xl hover:border-sky-500/40 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400 mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Explications Détaillées</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Comprenez vos erreurs grâce à des démonstrations étape par étape et des explications rédigées proprement avec KaTeX.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="glass-card p-6 rounded-2xl hover:border-emerald-500/40 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Combos Explosifs & Badges</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Débloquez des séries de victoires avec le système de combo, cumulez des points d'expérience et suivez votre progression.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION LEÇONS ET EXERCICES (Sous-interfaces par niveau) -->
+    <section id="lecons" class="py-16 border-y border-slate-800/80 bg-slate-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="px-3 py-1 rounded-full bg-emerald-950 text-emerald-400 text-xs font-semibold border border-emerald-800">Bibliothèque Pédagogique</span>
+                <h2 class="text-3xl font-extrabold text-white mt-3">Leçons & Chapitres Structurés</h2>
+                <p class="text-slate-400 text-sm mt-2">Choisissez votre niveau d'étude pour explorer le programme complet et accéder à la sous-interface de cours.</p>
+            </div>
+
+            <!-- Onglets des Niveaux -->
+            <div class="flex flex-wrap justify-center gap-2 mb-8" id="level-tabs">
+                <button onclick="switchLevel('college')" id="tab-college" class="level-tab-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-sky-500 text-slate-950 shadow-lg shadow-sky-500/20">
+                    Collège (6ème - 3ème)
+                </button>
+                <button onclick="switchLevel('lycee')" id="tab-lycee" class="level-tab-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-slate-900 text-slate-300 hover:text-white border border-slate-800">
+                    Lycée (2nde - Tle)
+                </button>
+                <button onclick="switchLevel('l1')" id="tab-l1" class="level-tab-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-slate-900 text-slate-300 hover:text-white border border-slate-800">
+                    Université - L1 Mathématiques
+                </button>
+                <button onclick="switchLevel('l2')" id="tab-l2" class="level-tab-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-slate-900 text-slate-300 hover:text-white border border-slate-800">
+                    Université - L2 Mathématiques
+                </button>
+            </div>
+
+            <!-- Sélecteur de Mode d'Exercice (QCM vs Saisie Directe) -->
+            <div class="glass-card max-w-md mx-auto p-2 rounded-2xl mb-10 flex items-center justify-between border border-slate-700">
+                <span class="text-xs font-medium text-slate-300 ml-3">Mode de travail :</span>
+                <div class="flex space-x-1">
+                    <button onclick="setExerciseMode('qcm')" id="mode-qcm-btn" class="px-4 py-1.5 rounded-xl text-xs font-bold transition-all bg-emerald-400 text-slate-950">
+                        Mode QCM
+                    </button>
+                    <button onclick="setExerciseMode('direct')" id="mode-direct-btn" class="px-4 py-1.5 rounded-xl text-xs font-bold transition-all bg-slate-800 text-slate-400 hover:text-white">
+                        Saisie Directe (Grille Math)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Grille des Chapitres du Niveau Sélectionné -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="chapters-grid">
+                <!-- Injecté dynamiquement par JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- SOUS-INTERFACE MODALE DEDIÉE DE COURS ET LEÇONS -->
+    <div id="lesson-modal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-lg z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="glass-card max-w-3xl w-full p-6 sm:p-8 rounded-3xl border border-slate-700 shadow-2xl relative my-8 max-h-[90vh] flex flex-col">
+            <!-- Header Modal -->
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
+                <div>
+                    <span class="text-xs font-bold text-sky-400 bg-sky-950 px-2.5 py-1 rounded-full border border-sky-800" id="modal-lesson-level">L1 MATHÉMATIQUES</span>
+                    <h2 class="text-2xl font-extrabold text-white mt-2" id="modal-lesson-title">Titre de la leçon</h2>
+                </div>
+                <button onclick="closeLessonModal()" class="w-10 h-10 rounded-full bg-slate-900 border border-slate-700 text-slate-400 hover:text-white flex items-center justify-center text-xl font-bold transition-all">&times;</button>
+            </div>
+
+            <!-- Corps du cours -->
+            <div class="overflow-y-auto flex-1 pr-2 space-y-6 text-slate-300 text-sm leading-relaxed" id="modal-lesson-body">
+                <!-- Le contenu de la leçon enrichi KaTeX s'injecte ici -->
+            </div>
+
+            <!-- Footer Modal CTA -->
+            <div class="border-t border-slate-800 pt-6 mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <button onclick="closeLessonModal()" class="w-full sm:w-auto px-6 py-2.5 rounded-xl font-semibold text-slate-400 hover:text-white bg-slate-900 border border-slate-800 text-xs">
+                    Fermer la leçon
+                </button>
+                <button id="modal-start-btn" onclick="startQuizFromModal()" class="w-full sm:w-auto px-8 py-3 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-sky-400 to-emerald-400 hover:from-sky-300 hover:to-emerald-300 transition-all text-xs shadow-lg shadow-emerald-500/20">
+                    ⚡ S'entraîner sur ce chapitre →
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DEMO INTERACTIVE EN DIRECT AVEC LOCKY LA MASCOTTE ET LES COMBOS -->
+    <section id="demo" class="py-16 relative overflow-hidden bg-slate-900/30">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center mb-8">
+                <span class="px-3 py-1 rounded-full bg-sky-950 text-sky-400 text-xs font-semibold border border-sky-800">Moteur de Quiz Interactif</span>
+                <h2 class="text-3xl font-extrabold text-white mt-3">Testez la Démo Omnimath</h2>
+                <p class="text-slate-400 text-sm mt-2">Personnalisez votre session de test et observez les réactions de Locky la mascotte.</p>
+            </div>
+
+            <!-- CONTENEUR MASCOTTE LOCKY -->
+            <div class="flex items-center justify-between glass-card p-4 rounded-2xl mb-6 border border-slate-700 relative" id="mascot-bar">
+                <div class="flex items-center space-x-4">
+                    <!-- Icone SVG Locky Animée (Style Logo Officiel) -->
+                    <div class="w-14 h-14 rounded-2xl gradient-bg p-1 flex items-center justify-center shadow-lg shadow-emerald-500/20 relative cursor-pointer" id="locky-avatar-box" title="Cliquez pour faire voler Locky !" onclick="makeLockyFly()">
+                        <svg class="w-11 h-11 text-white transition-transform duration-300 hover:scale-110" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" id="locky-svg">
+                            <rect x="25" y="75" width="50" height="12" rx="3" fill="#15803d"/>
+                            <rect x="28" y="83" width="44" height="3" fill="#e2e8f0"/>
+                            <path d="M50 25C35 25 25 38 25 58C25 74 36 78 50 78C64 78 75 74 75 58C75 38 65 25 50 25Z" fill="#15803d"/>
+                            <path d="M36 45C36 38 42 34 50 34C58 34 64 38 64 45V68C64 68 56 74 50 74C44 74 36 68 36 68V45Z" fill="#f8fafc"/>
+                            <polygon points="50,15 78,26 50,37 22,26" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+                            <circle cx="40" cy="46" r="8" fill="white"/>
+                            <circle cx="60" cy="46" r="8" fill="white"/>
+                            <circle cx="40" cy="46" r="4" fill="#0f172a"/>
+                            <circle cx="60" cy="46" r="4" fill="#0f172a"/>
+                            <polygon points="50,48 45,55 55,55" fill="#f59e0b"/>
+                            <rect x="8" y="32" width="16" height="22" rx="2" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
+                        </svg>
+                        <!-- Badge d'humeur -->
+                        <span class="absolute -bottom-1 -right-1 text-xs px-1.5 py-0.5 rounded-full bg-slate-900 border border-slate-700" id="locky-mood">🦉</span>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="font-bold text-white text-sm">Locky</span>
+                            <span class="text-[10px] text-sky-400 bg-sky-950 px-2 py-0.5 rounded-full border border-sky-800">Mascotte Officielle</span>
+                        </div>
+                        <p class="text-xs text-slate-300 italic mt-0.5" id="locky-speech">"Bonjour ! Configure ta session et voyons tes compétences en maths !"</p>
+                    </div>
+                </div>
+
+                <div class="hidden sm:flex flex-col items-end">
+                    <button onclick="makeLockyFly()" class="text-[11px] text-slate-400 hover:text-emerald-400 bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-slate-700 transition-all flex items-center space-x-1">
+                        <span>✈️ Faire voler Locky</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ECRAN DE CONFIGURATION DU QUIZ -->
+            <div id="quiz-config-screen" class="glass-card rounded-3xl p-6 sm:p-8 border border-slate-700 shadow-2xl">
+                <h3 class="text-xl font-bold text-white mb-6 flex items-center space-x-2">
+                    <span class="text-sky-400">⚙️</span>
+                    <span>Configuration de votre Session</span>
+                </h3>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                    <!-- Niveau / Classe -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">Classe / Niveau</label>
+                        <select id="config-level-select" onchange="updateTopicOptions()" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl p-3 text-sm focus:border-emerald-500 focus:outline-none">
+                            <option value="college">Collège (6ème à 3ème)</option>
+                            <option value="lycee">Lycée (Seconde à Terminale)</option>
+                            <option value="l1">Université - L1 Mathématiques</option>
+                            <option value="l2">Université - L2 Mathématiques</option>
+                        </select>
+                    </div>
+
+                    <!-- Matière / Thème -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">Thème de la session</label>
+                        <select id="config-topic-select" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl p-3 text-sm focus:border-emerald-500 focus:outline-none">
+                            <!-- Options remplies par JS -->
+                        </select>
+                    </div>
+
+                    <!-- Nombre de questions -->
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">Nombre de questions</label>
+                        <div class="grid grid-cols-4 gap-3" id="q-count-selector">
+                            <button onclick="selectQuestionCount(3)" class="q-count-btn p-3 rounded-xl border border-emerald-500 bg-emerald-950/40 text-emerald-300 font-bold text-sm text-center">3 Questions</button>
+                            <button onclick="selectQuestionCount(5)" class="q-count-btn p-3 rounded-xl border border-slate-700 bg-slate-900 text-slate-300 font-bold text-sm text-center hover:border-slate-500">5 Questions</button>
+                            <button onclick="selectQuestionCount(10)" class="q-count-btn p-3 rounded-xl border border-slate-700 bg-slate-900 text-slate-300 font-bold text-sm text-center hover:border-slate-500">10 Questions</button>
+                            <button onclick="selectQuestionCount(15)" class="q-count-btn p-3 rounded-xl border border-slate-700 bg-slate-900 text-slate-300 font-bold text-sm text-center hover:border-slate-500">15 Questions</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="startCustomQuiz()" class="w-full py-4 rounded-2xl font-bold text-slate-950 bg-gradient-to-r from-sky-400 to-emerald-400 hover:from-sky-300 hover:to-emerald-300 transition-all text-center shadow-lg shadow-emerald-500/20">
+                    🚀 Lancer le Quiz Personnalisé
+                </button>
+            </div>
+
+            <!-- ECRAN DE JEU QUIZ (Caché au départ) -->
+            <div id="quiz-game-screen" class="hidden glass-card rounded-3xl p-6 sm:p-8 border border-slate-700 shadow-2xl relative">
+                
+                <!-- Quiz Header & Combo Bar -->
+                <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
+                    <div class="flex items-center space-x-3">
+                        <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-300" id="quiz-topic">Algèbre & Équations</span>
+                    </div>
+
+                    <!-- Combo Explosif Counter -->
+                    <div class="flex items-center space-x-3">
+                        <div id="combo-box" class="hidden items-center space-x-1 bg-amber-500/20 border border-amber-500/50 px-3 py-1 rounded-full text-amber-400 font-black text-xs combo-fire">
+                            <span>🔥 COMBO</span>
+                            <span id="combo-count">x0</span>
+                        </div>
+                        <span class="text-xs text-slate-400 bg-slate-800 px-3 py-1 rounded-full" id="quiz-progress">Question 1 / 3</span>
+                    </div>
+                </div>
+
+                <!-- Question Text -->
+                <div class="min-h-[90px] flex flex-col justify-center mb-6">
+                    <h3 class="text-lg sm:text-xl font-medium text-white" id="quiz-question">Chargement de la question...</h3>
+                </div>
+
+                <!-- Options Grid (QCM) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6" id="quiz-options">
+                    <!-- Boutons injectés par JS -->
+                </div>
+
+                <!-- MODE SAISIE DIRECTE AVEC CLAVIER VIRTUEL (Style Grille photo) -->
+                <div id="direct-input-box" class="hidden mb-6 p-4 rounded-2xl bg-slate-900 border border-slate-800">
+                    <p class="text-xs text-slate-400 mb-3">Remplissez l'équation dans la grille ci-dessous :</p>
+                    
+                    <!-- Zone de la Grille d'équation -->
+                    <div class="flex items-center justify-center space-x-2 mb-6" id="math-grid-container">
+                        <div class="math-grid-cell">2</div>
+                        <div class="math-grid-cell">x</div>
+                        <div class="math-grid-cell">+</div>
+                        <div class="math-grid-cell">5</div>
+                        <div class="math-grid-cell">=</div>
+                        <div class="math-grid-cell empty" id="grid-user-cell">?</div>
+                    </div>
+
+                    <!-- Clavier Interactif à Boutons (inspiré du jeu de grille) -->
+                    <div class="grid grid-cols-6 gap-2 max-w-sm mx-auto mb-4" id="math-keypad">
+                        <button onclick="pressKey('5')" class="p-3 rounded-xl bg-slate-800 hover:bg-sky-500 hover:text-slate-950 font-bold text-base border border-slate-700 text-white">5</button>
+                        <button onclick="pressKey('12')" class="p-3 rounded-xl bg-slate-800 hover:bg-sky-500 hover:text-slate-950 font-bold text-base border border-slate-700 text-white">12</button>
+                        <button onclick="pressKey('1')" class="p-3 rounded-xl bg-slate-800 hover:bg-sky-500 hover:text-slate-950 font-bold text-base border border-slate-700 text-white">1</button>
+                        <button onclick="pressKey('4')" class="p-3 rounded-xl bg-slate-800 hover:bg-sky-500 hover:text-slate-950 font-bold text-base border border-slate-700 text-white">4</button>
+                        <button onclick="pressKey('8')" class="p-3 rounded-xl bg-slate-800 hover:bg-sky-500 hover:text-slate-950 font-bold text-base border border-slate-700 text-white">8</button>
+                        <button onclick="pressKey('20')" class="p-3 rounded-xl bg-slate-800 hover:bg-sky-500 hover:text-slate-950 font-bold text-base border border-slate-700 text-white">20</button>
+                    </div>
+
+                    <div class="flex justify-center space-x-3">
+                        <button onclick="clearGrid()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 bg-slate-800 hover:text-white">Effacer</button>
+                        <button onclick="checkDirectAnswer()" class="px-6 py-2.5 rounded-xl font-bold text-slate-950 bg-emerald-400 hover:bg-emerald-300 text-xs">
+                            Valider la Grille
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Explanation Box -->
+                <div id="quiz-explanation" class="hidden p-4 rounded-xl bg-slate-900 border border-slate-700 text-sm mb-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <p class="font-bold text-emerald-400" id="quiz-feedback-title">Explication :</p>
+                        <!-- Bouton 'Je n'ai pas compris' -->
+                        <button onclick="toggleDeepExplanation()" id="need-more-help-btn" class="text-xs text-sky-400 hover:underline flex items-center space-x-1">
+                            <span>💡 Je n'ai pas compris l'explication</span>
+                        </button>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed" id="quiz-feedback-text"></p>
+
+                    <!-- Explication Approfondie Cachée -->
+                    <div id="deep-explanation-box" class="hidden mt-4 pt-4 border-t border-slate-800 text-slate-300 bg-slate-950/60 p-3 rounded-lg border border-sky-900/40">
+                        <p class="font-bold text-sky-300 text-xs uppercase tracking-wider mb-2">🔍 Démonstration Approfondie Étape par Étape :</p>
+                        <p class="text-xs text-slate-300 leading-relaxed" id="deep-explanation-text">
+                            Analyse pas à pas...
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Quiz Action Bar -->
+                <div class="flex items-center justify-between border-t border-slate-800/80 pt-4">
+                    <button onclick="openReportModal()" class="text-xs text-slate-500 hover:text-slate-300 flex items-center space-x-1">
+                        <span>⚠️ Signaler un problème sur cette question</span>
+                    </button>
+
+                    <button id="quiz-next-btn" onclick="nextQuestion()" class="hidden px-6 py-2.5 rounded-xl font-bold text-slate-950 bg-emerald-400 hover:bg-emerald-300 transition-all text-sm">
+                        Question Suivante →
+                    </button>
+                </div>
+            </div>
+
+            <!-- ECRAN DE STATISTIQUES FINALES -->
+            <div id="quiz-results-screen" class="hidden glass-card rounded-3xl p-6 sm:p-8 border border-slate-700 text-center">
+                <div class="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 mx-auto mb-4 text-2xl">
+                    🏆
+                </div>
+                <h3 class="text-2xl font-extrabold text-white mb-2">Session Terminée !</h3>
+                <p class="text-slate-400 text-sm mb-6">Voici le bilan de tes performances scientifiques :</p>
+
+                <div class="grid grid-cols-3 gap-4 max-w-lg mx-auto mb-8">
+                    <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800">
+                        <p class="text-xs text-slate-400">Score Final</p>
+                        <p class="text-2xl font-black text-sky-400 mt-1" id="res-score">0 / 0</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800">
+                        <p class="text-xs text-slate-400">Max Combo</p>
+                        <p class="text-2xl font-black text-amber-400 mt-1" id="res-combo">x0</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800">
+                        <p class="text-xs text-slate-400">Réussite</p>
+                        <p class="text-2xl font-black text-emerald-400 mt-1" id="res-percent">0%</p>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 text-left max-w-lg mx-auto mb-8">
+                    <p class="text-xs font-bold text-sky-400 uppercase tracking-wider mb-1">🚀 Envie d'aller plus loin ?</p>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Télécharge l'application **Math Quiz Comores** pour accéder à plus de 1000 exercices, débloquer tous les chapitres de cours et t'entraîner sans aucune connexion Internet !
+                    </p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button onclick="resetQuizConfig()" class="w-full sm:w-auto px-6 py-3 rounded-xl font-bold text-white bg-slate-800 hover:bg-slate-700 transition-all text-sm">
+                        🔄 Nouvelle Session
+                    </button>
+                    <a href="#telecharger" onclick="alert('Lien direct APK bientôt actif !');" class="w-full sm:w-auto px-6 py-3 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-sky-400 to-emerald-400 hover:from-sky-300 hover:to-emerald-300 transition-all text-sm">
+                        📱 Télécharger l'APK Officiel
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION A PROPOS & BIOGRAPHIE FONDATEUR -->
+    <section id="a-propos" class="py-16 bg-slate-900/40 border-y border-slate-800/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                
+                <div>
+                    <h2 class="text-xs font-bold tracking-widest text-sky-400 uppercase mb-2">À Propos d'Omnimath</h2>
+                    <p class="text-3xl font-extrabold text-white mb-6">Démocratiser l'excellence scientifique par le numérique</p>
+                    <div class="space-y-4 text-slate-300 text-sm leading-relaxed">
+                        <p>
+                            **Omnimath** est un éditeur de logiciels et d'applications éducatives fondé aux Comores. Notre mission est d'offrir à chaque élève et étudiant des outils modernes, intuitifs et adaptés aux réalités locales pour surmonter les difficultés en mathématiques.
+                        </p>
+                        <p>
+                            Pensées pour fonctionner parfaitement même sans connexion Internet, nos solutions combinent une pédagogie rigoureuse, des éléments de ludification (*gamification*) et une interface fluide développée sur mesure.
+                        </p>
+                    </div>
+
+                    <!-- BLOC BIOGRAPHIE OFFICIELLE DU FONDATEUR -->
+                    <div class="mt-8 p-6 rounded-2xl bg-slate-900/80 border border-slate-800">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-r from-sky-400 to-emerald-400 p-0.5 flex items-center justify-center">
+                                <div class="w-full h-full bg-slate-950 rounded-full flex items-center justify-center font-bold text-sky-400 text-sm">
+                                    FN
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-white font-bold text-base">Fazad Nassur</p>
+                                <p class="text-xs text-emerald-400 font-medium">Fondateur & Développeur Principal</p>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed italic">
+                            "Fazad Nassur est un jeune développeur et étudiant en mathématiques aux Comores. Passionné par l'informatique et les sciences, il conçoit ses applications directement sur mobile (via Pydroid 3) et automatise ses processus de déploiement à l'aide de pipelines CI/CD sur GitHub. Il démontre qu'avec de la détermination, la passion du code et des mathématiques, il est possible de créer des outils technologiques de qualité depuis les Comores pour inspirer la nouvelle génération."
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Vision Card -->
+                <div class="glass-card p-8 rounded-3xl border border-slate-700 relative overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-sky-500/10 rounded-full blur-2xl"></div>
+                    <h3 class="text-xl font-bold text-white mb-6 flex items-center space-x-2">
+                        <span class="text-emerald-400">⚡</span>
+                        <span>Nos Engagements Pédagogiques</span>
+                    </h3>
+                    <ul class="space-y-4 text-slate-300 text-sm">
+                        <li class="flex items-start space-x-3">
+                            <span class="text-emerald-400 font-bold">✓</span>
+                            <span>**Accessibilité globale :** Une utilisation fluide et complète en mode 100% hors-ligne.</span>
+                        </li>
+                        <li class="flex items-start space-x-3">
+                            <span class="text-emerald-400 font-bold">✓</span>
+                            <span>**Couverture complète :** Des programmes structurés du collège jusqu'à la 2ème année universitaire.</span>
+                        </li>
+                        <li class="flex items-start space-x-3">
+                            <span class="text-emerald-400 font-bold">✓</span>
+                            <span>**Souveraineté numérique :** Une technologie éducative conçue et déployée depuis les Comores.</span>
+                        </li>
+                        <li class="flex items-start space-x-3">
+                            <span class="text-emerald-400 font-bold">✓</span>
+                            <span>**Propriété réservée :** Tous droits réservés sur les contenus, algorithmes et logiciels d'Omnimath.</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION COMMUNAUTE & CONTACT -->
+    <section id="communaute" class="py-16">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-extrabold text-white mb-4">Rejoignez la Communauté Omnimath</h2>
+            <p class="text-slate-400 max-w-2xl mx-auto text-sm mb-10">
+                Échangez directement avec le développeur, proposez des améliorations, signalez un besoin et recevez les dernières mises à jour en direct.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
+                <!-- WhatsApp Card -->
+                <a href="https://wa.me/" target="_blank" class="glass-card p-6 rounded-2xl border border-emerald-500/30 hover:border-emerald-500 transition-all text-left group">
+                    <div class="flex items-center space-x-4 mb-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-white group-hover:text-emerald-400 transition-colors">Groupe WhatsApp</h3>
+                            <p class="text-xs text-slate-400">Math Quiz Comores</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-300">Rejoindre le groupe de discussion officiel des utilisateurs et passionnés.</p>
+                </a>
+
+                <!-- Support Email Card -->
+                <a href="mailto:contact@omnimath.com" class="glass-card p-6 rounded-2xl border border-sky-500/30 hover:border-sky-500 transition-all text-left group">
+                    <div class="flex items-center space-x-4 mb-3">
+                        <div class="w-10 h-10 rounded-xl bg-sky-500/20 flex items-center justify-center text-sky-400 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 002-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-white group-hover:text-sky-400 transition-colors">Contact Direct</h3>
+                            <p class="text-xs text-slate-400">Support & Partenariats</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-300">Écrivez-nous directement pour toute demande spécifique ou retour technique.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL DE SIGNALEMENT D'ERREUR OU SOUCI LOGIQUE -->
+    <div id="report-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card max-w-lg w-full p-6 rounded-3xl border border-slate-700 shadow-2xl relative">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-white flex items-center space-x-2">
+                    <span>⚠️</span>
+                    <span>Signaler un problème</span>
+                </h3>
+                <button onclick="closeReportModal()" class="text-slate-400 hover:text-white font-bold text-xl">&times;</button>
+            </div>
+            <p class="text-xs text-slate-300 mb-4 leading-relaxed">
+                Aidez-nous à rendre **Omnimath.dev** irréprochable. Indiquez-nous l'erreur typographique, de formule ou le souci de logique constaté :
+            </p>
+            <textarea id="report-text" rows="4" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl p-3 text-sm focus:border-emerald-500 focus:outline-none mb-4" placeholder="Décrivez l'erreur ou le problème logique rencontré..."></textarea>
+            <div class="flex justify-end space-x-3">
+                <button onclick="closeReportModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white bg-slate-800">Annuler</button>
+                <button onclick="submitReport()" class="px-5 py-2 rounded-xl text-xs font-bold text-slate-950 bg-emerald-400 hover:bg-emerald-300">Envoyer le signalement</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-slate-800 bg-slate-950 py-8 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>© 2026 Omnimath.dev (Éditeur d'applications éducatives). Tous droits réservés.</p>
+            <p class="mt-2 text-slate-600">Développé avec passion aux Comores 🇰🇲 par Fazad Nassur</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPT APPLICATION & ENGINE JS -->
+    <script>
+        // --- BASE DE DONNÉES DES COURS ET LEÇONS PAR NIVEAU ---
+        const fullLessonsDatabase = {
+            college: [
+                {
+                    id: "c1",
+                    title: "Arithmétique & PGCD",
+                    count: "12 Exercices",
+                    desc: "Divisibilité, nombres premiers, algorithme d'Euclide.",
+                    content: `
+                        <div class="space-y-4">
+                            <h4 class="text-sky-400 font-bold text-base">1. Divisibilité et Nombres Premiers</h4>
+                            <p>Un entier naturel <span class="text-emerald-400 font-mono">a</span> est divisible par un entier <span class="text-emerald-400 font-mono">b</span> non nul s'il existe un entier <span class="text-emerald-400 font-mono">k</span> tel que <span class="text-emerald-400 font-mono">a = b × k</span>.</p>
+                            <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                                <p class="text-xs text-slate-400 font-bold uppercase mb-1">Théorème (Algorithme d'Euclide) :</p>
+                                <p>Le Plus Grand Commun Diviseur (PGCD) de deux entiers s'obtient par des divisions successives du reste jusqu'à obtenir un reste nul.</p>
+                            </div>
+                            <h4 class="text-sky-400 font-bold text-base">2. Exemple d'application :</h4>
+                            <p>Pour calculer <span class="font-bold">PGCD(36, 24)</span> :</p>
+                            <p class="font-mono text-xs bg-slate-950 p-3 rounded-lg border border-slate-800 text-sky-300">
+                                36 = 24 × 1 + 12 <br>
+                                24 = 12 × 2 + 0
+                            </p>
+                            <p>Le dernier reste non nul est <span class="text-emerald-400 font-bold">12</span>, donc PGCD(36, 24) = 12.</p>
+                        </div>
+                    `
+                },
+                {
+                    id: "c2",
+                    title: "Équations du 1er Degré",
+                    count: "15 Exercices",
+                    desc: "Résolution d'équations à une inconnue et problèmes.",
+                    content: `
+                        <div class="space-y-4">
+                            <h4 class="text-sky-400 font-bold text-base">1. Principes de Résolution</h4>
+                            <p>Résoudre une équation du type <span class="text-sky-300 font-mono">ax + b = c</span> consiste à isoler l'inconnue <span class="text-sky-300 font-mono">x</span> en effectuant les mêmes opérations algébriques des deux côtés de l'égalité.</p>
+                            <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                                <p class="text-xs text-slate-400 font-bold uppercase mb-1">Règle d'or :</p>
+                                <p>Toute addition d'un côté devient une soustraction de l'autre côté, et toute multiplication devient une division.</p>
+                            </div>
+                            <h4 class="text-sky-400 font-bold text-base">2. Exemple Détaillé :</h4>
+                            <p>Résoudre <span class="font-mono text-emerald-400">2x + 5 = 15</span> :</p>
+                            <p class="font-mono text-xs bg-slate-950 p-3 rounded-lg border border-slate-800 text-sky-300">
+                                2x = 15 - 5 <br>
+                                2x = 10 <br>
+                                x = 10 / 2 = 5
+                            </p>
+                        </div>
+                    `
+                },
+                {
+                    id: "c3",
+                    title: "Théorème de Pythagore",
+                    count: "10 Exercices",
+                    desc: "Calcul de longueurs et démonstration de l'orthogonalité.",
+                    content: `
+                        <div class="space-y-4">
+                            <h4 class="text-sky-400 font-bold text-base">1. Énoncé du Théorème</h4>
+                            <p>Dans un triangle <span class="font-bold">ABC</span> rectangle en <span class="font-bold">A</span>, le carré de l'hypoténuse est égal à la somme des carrés des deux autres côtés :</p>
+                            <p class="text-center font-bold text-emerald-400 text-base my-2">BC² = AB² + AC²</p>
+                        </div>
+                    `
+                }
+            ],
+            lycee: [
+                {
+                    id: "l_sec",
+                    title: "Second Degré & Trinômes",
+                    count: "18 Exercices",
+                    desc: "Calcul du discriminant Delta, racines et factorisation.",
+                    content: `
+                        <div class="space-y-4">
+                            <h4 class="text-sky-400 font-bold text-base">1. Trinôme du second degré</h4>
+                            <p>Soit la fonction <span class="font-mono text-sky-300">f(x) = ax² + bx + c</span> avec <span class="font-mono">a ≠ 0</span>. Le discriminant est défini par :</p>
+                            <p class="text-center font-bold text-emerald-400 text-base my-2">Δ = b² - 4ac</p>
+                            <ul class="list-disc list-inside space-y-1 text-xs">
+                                <li>Si Δ > 0 : 2 solutions réelles x₁ = (-b - √Δ)/2a et x₂ = (-b + √Δ)/2a</li>
+                                <li>Si Δ = 0 : 1 solution double x₀ = -b / 2a</li>
+                                <li>Si Δ < 0 : Aucune solution réelle</li>
+                            </ul>
+                        </div>
+                    `
+                }
+            ],
+            l1: [
+                {
+                    id: "l1_ana",
+                    title: "Analyse 1 : Limites & Continuité",
+                    count: "22 Exercices",
+                    desc: "Définitions en epsilon-delta, théorème des valeurs intermédiaires.",
+                    content: `
+                        <div class="space-y-4">
+                            <h4 class="text-sky-400 font-bold text-base">1. Définition formelle de la limite</h4>
+                            <p>Soit <span class="font-mono">f : I → ℝ</span>. On dit que <span class="font-mono">f(x)</span> tend vers <span class="font-mono">L</span> en <span class="font-mono">x₀</span> si :</p>
+                            <p class="text-center font-mono text-emerald-400 text-xs bg-slate-950 p-3 rounded-lg border border-slate-800 my-2">
+                                ∀ε > 0, ∃δ > 0, ∀x ∈ I, |x - x₀| < δ ⟹ |f(x) - L| < ε
+                            </p>
+                            <h4 class="text-sky-400 font-bold text-base">2. Théorème des Valeurs Intermédiaires (TVI)</h4>
+                            <p>Si <span class="font-mono">f</span> est continue sur <span class="font-mono">[a, b]</span> et que <span class="font-mono">y</span> est compris entre <span class="font-mono">f(a)</span> et <span class="font-mono">f(b)</span>, il existe au moins un <span class="font-mono">c ∈ [a, b]</span> tel que <span class="font-mono">f(c) = y</span>.</p>
+                        </div>
+                    `
+                }
+            ],
+            l2: [
+                {
+                    id: "l2_topo",
+                    title: "Topologie des Espaces Normés",
+                    count: "18 Exercices",
+                    desc: "Ouverts, fermés, compacité, connexité et normes équivalentes.",
+                    content: `
+                        <div class="space-y-4">
+                            <h4 class="text-sky-400 font-bold text-base">1. Normes et Distances</h4>
+                            <p>Une norme sur un espace vectoriel <span class="font-mono">E</span> est une application <span class="font-mono">||·|| : E → ℝ⁺</span> vérifiant la séparation, l'homogénéité et l'inégalité triangulaire.</p>
+                            <h4 class="text-sky-400 font-bold text-base">2. Théorème de Riesz</h4>
+                            <p>La boule unité fermée d'un EVN est compacte si et seulement si l'espace est de dimension finie.</p>
+                        </div>
+                    `
+                }
+            ]
+        };
+
+        // --- DONNÉES DU QUIZ ---
+        const quizBank = {
+            college: [
+                {
+                    topic: "Équations du 1er degré",
+                    question: "Résoudre l'équation : <span class='text-sky-400 font-bold'>2x + 5 = 15</span>. Quelle est la valeur de x ?",
+                    options: ["x = 3", "x = 5", "x = 10", "x = 7"],
+                    correct: 1,
+                    directAnswer: "5",
+                    explanation: "2x + 5 = 15  ⟹  2x = 15 - 5  ⟹  2x = 10  ⟹  x = 10 / 2 = 5.",
+                    deepExplanation: "Pour isoler x, on soustrait d'abord la constante 5 des deux côtés de l'égalité : 2x = 10. Ensuite, on divise par le coefficient de x qui est 2. On obtient x = 5."
+                },
+                {
+                    topic: "Arithmétique",
+                    question: "Quel est le PGCD de <span class='text-sky-400 font-bold'>24 et 36</span> ?",
+                    options: ["6", "8", "12", "18"],
+                    correct: 2,
+                    directAnswer: "12",
+                    explanation: "Les diviseurs communs de 24 et 36 sont {1, 2, 3, 4, 6, 12}. Le plus grand est 12.",
+                    deepExplanation: "En décomposant en facteurs premiers : 24 = 2³ × 3 et 36 = 2² × 3². Le PGCD prend les facteurs communs avec la plus petite puissance : 2² × 3 = 4 × 3 = 12."
+                }
+            ],
+            lycee: [
+                {
+                    topic: "Second Degré",
+                    question: "Calculer le discriminant Δ de <span class='text-sky-400 font-bold'>x² - 5x + 6 = 0</span>.",
+                    options: ["Δ = 1", "Δ = 25", "Δ = 0", "Δ = -1"],
+                    correct: 0,
+                    directAnswer: "1",
+                    explanation: "Δ = b² - 4ac = (-5)² - 4(1)(6) = 25 - 24 = 1.",
+                    deepExplanation: "Identifions les coefficients : a = 1, b = -5, c = 6. Appliquons la formule Δ = b² - 4ac : (-5)² = 25 et 4 × 1 × 6 = 24. Ainsi 25 - 24 = 1. Comme Δ > 0, il y a deux solutions réelles distinctes."
+                }
+            ],
+            l1: [
+                {
+                    topic: "Espaces Vectoriels",
+                    question: "Quelle est la dimension de l'espace vectoriel <span class='text-sky-400 font-bold'>M₂(ℝ)</span> des matrices 2x2 ?",
+                    options: ["2", "4", "3", "8"],
+                    correct: 1,
+                    directAnswer: "4",
+                    explanation: "Une matrice 2x2 possède 4 coefficients indépendants, donc dim(M₂(ℝ)) = 2 × 2 = 4.",
+                    deepExplanation: "La base canonique de M₂(ℝ) est composée des 4 matrices E₁₁, E₁₂, E₂₁, E₂₂ ayant un 1 à une position spécifique et des 0 ailleurs. La dimension égale le nombre d'éléments dans la base, soit 4."
+                }
+            ],
+            l2: [
+                {
+                    topic: "Algèbre Bilinéaire",
+                    question: "Si M est une matrice symétrique réelle, alors M est nécessairement :",
+                    options: ["Inversible", "Diagonalisable dans ℝ", "Nilpotente", "Orthogonale"],
+                    correct: 1,
+                    directAnswer: "diagonalisable",
+                    explanation: "D'après le théorème spectral, toute matrice symétrique réelle est diagonalisable dans une base orthonormée de ℝ.",
+                    deepExplanation: "Le théorème spectral garantit que toutes les valeurs propres d'une matrice réelle symétrique sont réelles et qu'il existe une base orthonormée de vecteurs propres."
+                }
+            ]
+        };
+
+        // --- ÉTATS GLOBAUX ---
+        let currentLevel = 'college';
+        let currentExerciseMode = 'qcm';
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let combo = 0;
+        let maxCombo = 0;
+        let answered = false;
+        let selectedCount = 3;
+        let activeQuizQuestions = [];
+        let currentGridValue = "?";
+        let activeModalLesson = null;
+
+        // INITIALISATION AU CHARGEMENT
+        window.onload = function() {
+            renderChapters('college');
+            updateTopicOptions();
+        };
+
+        // GESTION DES NIVEAUX DE COURS
+        function switchLevel(level) {
+            currentLevel = level;
+            document.querySelectorAll('.level-tab-btn').forEach(btn => {
+                btn.className = "level-tab-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-slate-900 text-slate-300 hover:text-white border border-slate-800";
+            });
+            const activeBtn = document.getElementById(`tab-${level}`);
+            if (activeBtn) {
+                activeBtn.className = "level-tab-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-sky-500 text-slate-950 shadow-lg shadow-sky-500/20";
+            }
+            renderChapters(level);
+        }
+
+        function renderChapters(level) {
+            const container = document.getElementById('chapters-grid');
+            container.innerHTML = '';
+            const chapters = fullLessonsDatabase[level] || fullLessonsDatabase['college'];
+
+            chapters.forEach((chap) => {
+                const card = document.createElement('div');
+                card.className = "glass-card p-6 rounded-2xl border border-slate-800 hover:border-emerald-500/50 transition-all flex flex-col justify-between";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-bold text-sky-400 bg-sky-950 px-2.5 py-1 rounded-full border border-sky-800">${chap.title}</span>
+                            <span class="text-xs text-slate-400">${chap.count}</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">${chap.title}</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-6">${chap.desc}</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 mt-4">
+                        <button onclick="openLessonModal('${level}', '${chap.id}')" class="py-2.5 rounded-xl text-xs font-bold bg-slate-900 hover:bg-slate-800 text-sky-400 border border-slate-700 transition-all">
+                            📖 Lire le cours
+                        </button>
+                        <button onclick="startQuizForChapter('${chap.title}')" class="py-2.5 rounded-xl text-xs font-bold bg-emerald-400 hover:bg-emerald-300 text-slate-950 transition-all">
+                            ⚡ S'entraîner
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // OUVERTURE DE LA SOUS-INTERFACE MODALE DU COURS
+        function openLessonModal(level, lessonId) {
+            const list = fullLessonsDatabase[level] || fullLessonsDatabase['college'];
+            const chap = list.find(l => l.id === lessonId) || list[0];
+            activeModalLesson = chap;
+
+            document.getElementById('modal-lesson-level').innerText = level.toUpperCase();
+            document.getElementById('modal-lesson-title').innerText = chap.title;
+            document.getElementById('modal-lesson-body').innerHTML = chap.content;
+            document.getElementById('lesson-modal').classList.remove('hidden');
+        }
+
+        function closeLessonModal() {
+            document.getElementById('lesson-modal').classList.add('hidden');
+        }
+
+        function startQuizFromModal() {
+            closeLessonModal();
+            if (activeModalLesson) {
+                startQuizForChapter(activeModalLesson.title);
+            }
+        }
+
+        // COMMUTATEUR DE MODE D'EXERCICE
+        function setExerciseMode(mode) {
+            currentExerciseMode = mode;
+            const qcmBtn = document.getElementById('mode-qcm-btn');
+            const directBtn = document.getElementById('mode-direct-btn');
+
+            if (mode === 'qcm') {
+                qcmBtn.className = "px-4 py-1.5 rounded-xl text-xs font-bold transition-all bg-emerald-400 text-slate-950";
+                directBtn.className = "px-4 py-1.5 rounded-xl text-xs font-bold transition-all bg-slate-800 text-slate-400 hover:text-white";
+            } else {
+                directBtn.className = "px-4 py-1.5 rounded-xl text-xs font-bold transition-all bg-emerald-400 text-slate-950";
+                qcmBtn.className = "px-4 py-1.5 rounded-xl text-xs font-bold transition-all bg-slate-800 text-slate-400 hover:text-white";
+            }
+        }
+
+        // CLAVIER DE LA GRILLE MATH
+        function pressKey(val) {
+            currentGridValue = val;
+            const cell = document.getElementById('grid-user-cell');
+            if (cell) {
+                cell.innerText = val;
+                cell.classList.remove('empty');
+                cell.classList.add('border-emerald-400', 'bg-emerald-950/60');
+            }
+        }
+
+        function clearGrid() {
+            currentGridValue = "?";
+            const cell = document.getElementById('grid-user-cell');
+            if (cell) {
+                cell.innerText = "?";
+                cell.classList.add('empty');
+                cell.classList.remove('border-emerald-400', 'bg-emerald-950/60');
+            }
+        }
+
+        // MAJ DES OPTIONS DU MENU DÉROULANT DU QUIZ
+        function updateTopicOptions() {
+            const lvl = document.getElementById('config-level-select').value;
+            const select = document.getElementById('config-topic-select');
+            select.innerHTML = '';
+            
+            const chapters = fullLessonsDatabase[lvl] || [];
+            chapters.forEach(chap => {
+                const opt = document.createElement('option');
+                opt.value = chap.title;
+                opt.innerText = chap.title;
+                select.appendChild(opt);
+            });
+        }
+
+        function selectQuestionCount(count) {
+            selectedCount = count;
+            document.querySelectorAll('.q-count-btn').forEach(btn => {
+                btn.className = "q-count-btn p-3 rounded-xl border border-slate-700 bg-slate-900 text-slate-300 font-bold text-sm text-center hover:border-slate-500";
+            });
+            event.target.className = "q-count-btn p-3 rounded-xl border border-emerald-500 bg-emerald-950/40 text-emerald-300 font-bold text-sm text-center";
+        }
+
+        // LANCEMENT DU QUIZ
+        function startCustomQuiz() {
+            const lvl = document.getElementById('config-level-select').value;
+            const questionsPool = quizBank[lvl] || quizBank['college'];
+            
+            activeQuizQuestions = [...questionsPool];
+            while (activeQuizQuestions.length < selectedCount) {
+                activeQuizQuestions.push(questionsPool[Math.floor(Math.random() * questionsPool.length)]);
+            }
+            activeQuizQuestions = activeQuizQuestions.slice(0, selectedCount);
+
+            currentQuestionIndex = 0;
+            score = 0;
+            combo = 0;
+            maxCombo = 0;
+
+            document.getElementById('quiz-config-screen').classList.add('hidden');
+            document.getElementById('quiz-results-screen').classList.add('hidden');
+            document.getElementById('quiz-game-screen').classList.remove('hidden');
+
+            updateLocky("🦉", "C'est parti ! Concentration maximale pour faire exploser le score !");
+            loadQuizQuestion();
+        }
+
+        function startQuizForChapter(title) {
+            document.getElementById('demo').scrollIntoView({ behavior: 'smooth' });
+            startCustomQuiz();
+        }
+
+        // CHARGEMENT DE LA QUESTION ACTUELLE
+        function loadQuizQuestion() {
+            answered = false;
+            clearGrid();
+            const q = activeQuizQuestions[currentQuestionIndex];
+
+            document.getElementById('quiz-topic').innerText = q.topic;
+            document.getElementById('quiz-progress').innerText = `Question ${currentQuestionIndex + 1} / ${activeQuizQuestions.length}`;
+            document.getElementById('quiz-question').innerHTML = q.question;
+            document.getElementById('quiz-explanation').classList.add('hidden');
+            document.getElementById('deep-explanation-box').classList.add('hidden');
+            document.getElementById('quiz-next-btn').classList.add('hidden');
+
+            if (currentExerciseMode === 'qcm') {
+                document.getElementById('quiz-options').classList.remove('hidden');
+                document.getElementById('direct-input-box').classList.add('hidden');
+                
+                const optionsContainer = document.getElementById('quiz-options');
+                optionsContainer.innerHTML = '';
+                q.options.forEach((opt, index) => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full text-left p-4 rounded-xl bg-slate-900 border border-slate-700 hover:border-sky-400 text-white transition-all text-sm font-medium flex justify-between items-center";
+                    btn.innerHTML = `<span>${opt}</span><span class="w-5 h-5 rounded-full border border-slate-600 flex items-center justify-center text-xs opacity-50">?</span>`;
+                    btn.onclick = () => checkQCMAnswer(index, btn);
+                    optionsContainer.appendChild(btn);
+                });
+            } else {
+                document.getElementById('quiz-options').classList.add('hidden');
+                document.getElementById('direct-input-box').classList.remove('hidden');
+            }
+        }
+
+        // VERIFICATION DE REPONSE (QCM)
+        function checkQCMAnswer(selectedIndex, selectedBtn) {
+            if (answered) return;
+            answered = true;
+
+            const q = activeQuizQuestions[currentQuestionIndex];
+            const optionsContainer = document.getElementById('quiz-options');
+            const buttons = optionsContainer.children;
+
+            if (selectedIndex === q.correct) {
+                selectedBtn.classList.remove('bg-slate-900', 'border-slate-700');
+                selectedBtn.classList.add('bg-emerald-950/80', 'border-emerald-500', 'text-emerald-300');
+                handleCorrectAnswer();
+            } else {
+                selectedBtn.classList.remove('bg-slate-900', 'border-slate-700');
+                selectedBtn.classList.add('bg-red-950/80', 'border-red-500', 'text-red-300');
+                
+                buttons[q.correct].classList.remove('bg-slate-900', 'border-slate-700');
+                buttons[q.correct].classList.add('bg-emerald-950/80', 'border-emerald-500', 'text-emerald-300');
+                handleWrongAnswer();
+            }
+
+            showExplanation(q);
+        }
+
+        // VERIFICATION DE REPONSE (SAISIE DIRECTE / GRILLE)
+        function checkDirectAnswer() {
+            if (answered) return;
+            if (currentGridValue === "?") {
+                alert("Veuillez sélectionner un nombre dans le pavé pour compléter la grille !");
+                return;
+            }
+            answered = true;
+
+            const q = activeQuizQuestions[currentQuestionIndex];
+            const expected = q.directAnswer.toLowerCase();
+
+            if (currentGridValue.toString().toLowerCase() === expected) {
+                handleCorrectAnswer();
+            } else {
+                handleWrongAnswer();
+            }
+
+            showExplanation(q);
+        }
+
+        function handleCorrectAnswer() {
+            score++;
+            combo++;
+            if (combo > maxCombo) maxCombo = combo;
+
+            updateComboUI();
+            document.getElementById('quiz-feedback-title').innerText = "Excellente réponse ! 🎉";
+            document.getElementById('quiz-feedback-title').className = "font-bold text-emerald-400 mb-1";
+
+            if (combo >= 2) {
+                updateLocky("🔥", `Incroyable ! Tu es sur un Combo x${combo} ! Continue de tout brûler !`);
+            } else {
+                updateLocky("🎉", "Bravo ! Réponse parfaitement exacte !");
+            }
+        }
+
+        function handleWrongAnswer() {
+            combo = 0;
+            updateComboUI();
+            document.getElementById('quiz-feedback-title').innerText = "Oups, ce n'est pas tout à fait ça ! 💡";
+            document.getElementById('quiz-feedback-title').className = "font-bold text-red-400 mb-1";
+            updateLocky("🤔", "Pas de panique ! Analyse l'explication ci-dessous pour mieux comprendre.");
+        }
+
+        function updateComboUI() {
+            const box = document.getElementById('combo-box');
+            if (combo >= 2) {
+                box.classList.remove('hidden');
+                box.classList.add('flex');
+                document.getElementById('combo-count').innerText = `x${combo}`;
+            } else {
+                box.classList.add('hidden');
+                box.classList.remove('flex');
+            }
+        }
+
+        function showExplanation(q) {
+            document.getElementById('quiz-feedback-text').innerText = q.explanation;
+            document.getElementById('deep-explanation-text').innerText = q.deepExplanation;
+            document.getElementById('quiz-explanation').classList.remove('hidden');
+
+            const nextBtn = document.getElementById('quiz-next-btn');
+            if (currentQuestionIndex < activeQuizQuestions.length - 1) {
+                nextBtn.innerText = "Question Suivante →";
+            } else {
+                nextBtn.innerText = "Voir le bilan final 🏆";
+            }
+            nextBtn.classList.remove('hidden');
+        }
+
+        function toggleDeepExplanation() {
+            const box = document.getElementById('deep-explanation-box');
+            box.classList.toggle('hidden');
+            if (!box.classList.contains('hidden')) {
+                updateLocky("🎓", "Voici la démonstration complète étape par étape pour éclairer ta lanterne !");
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < activeQuizQuestions.length - 1) {
+                currentQuestionIndex++;
+                loadQuizQuestion();
+            } else {
+                showFinalResults();
+            }
+        }
+
+        function showFinalResults() {
+            document.getElementById('quiz-game-screen').classList.add('hidden');
+            document.getElementById('quiz-results-screen').classList.remove('hidden');
+
+            const pct = Math.round((score / activeQuizQuestions.length) * 100);
+            document.getElementById('res-score').innerText = `${score} / ${activeQuizQuestions.length}`;
+            document.getElementById('res-combo').innerText = `x${maxCombo}`;
+            document.getElementById('res-percent').innerText = `${pct}%`;
+
+            if (pct >= 80) {
+                updateLocky("👑", "Performance remarquable ! Tu maîtrises parfaitement ce chapitre !");
+            } else {
+                updateLocky("💪", "Bon travail ! Un peu d'entraînement en plus et tu seras imbattable.");
+            }
+        }
+
+        function resetQuizConfig() {
+            document.getElementById('quiz-results-screen').classList.add('hidden');
+            document.getElementById('quiz-config-screen').classList.remove('hidden');
+            updateLocky("🦉", "Prêt pour un nouveau défi ? Choisis ta classe et tes objectifs !");
+        }
+
+        // ANIMATION VISIBLE DE LOCKY
+        function updateLocky(moodEmoji, text) {
+            document.getElementById('locky-mood').innerText = moodEmoji;
+            document.getElementById('locky-speech').innerText = `"${text}"`;
+        }
+
+        function makeLockyFly() {
+            const lockyBox = document.getElementById('locky-avatar-box');
+            updateLocky("✈️", "Regarde-moi voler ! Je reste juste ici pour surveiller tes calculs !");
+            
+            lockyBox.classList.add('animate-fly-visible');
+            setTimeout(() => {
+                lockyBox.classList.remove('animate-fly-visible');
+                updateLocky("🦉", "Atterrissage réussi ! Prêt pour la suite ?");
+            }, 2900);
+        }
+
+        // FORMULAIRE DE SIGNALEMENT DE PROBLEME
+        function openReportModal() {
+            document.getElementById('report-modal').classList.remove('hidden');
+        }
+
+        function closeReportModal() {
+            document.getElementById('report-modal').classList.add('hidden');
+            document.getElementById('report-text').value = '';
+        }
+
+        function submitReport() {
+            const txt = document.getElementById('report-text').value.trim();
+            if (txt) {
+                alert("Merci ! Votre signalement a été transmis à l'équipe Omnimath pour vérification.");
+                closeReportModal();
+            } else {
+                alert("Veuillez saisir une description du problème avant d'envoyer.");
+            }
+        }
+    </script>
+</body>
+</html>
