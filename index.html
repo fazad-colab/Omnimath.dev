@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Politique de Sécurité du Contenu (CSP) ajoutée pour blinder le navigateur contre les scripts non autorisés -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com https://fonts.gstatic.com 'unsafe-inline';">
     <title>Omnimath.dev - Apprentissage Mathématique Innovant</title>
     
     <!-- Tailwind CSS CDN -->
@@ -175,7 +177,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
             
             <!-- Badge -->
-            <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-700 text-xs text-slate-300 mb-6">
+        <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-700 text-xs text-slate-300 mb-6">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                 <span>Plateforme Fondée & Développée par Fazad Nassur</span>
             </div>
@@ -191,14 +193,14 @@
             </p>
 
             <!-- Buttons -->
-            <div id="telecharger" class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#" onclick="alert('Le lien direct de téléchargement de l\'APK Math Quiz Comores sera actif dès la mise en ligne finale sur GitHub !'); return false;" class="w-full sm:w-auto px-8 py-4 rounded-2xl font-bold text-slate-950 bg-gradient-to-r from-sky-400 to-emerald-400 hover:from-sky-300 hover:to-emerald-300 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 transition-all transform hover:-translate-y-1 flex items-center justify-center space-x-3">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M17.523 15.3414C17.0602 15.3414 16.6834 14.9646 16.6834 14.5018C16.6834 14.039 17.0602 13.6622 17.523 13.6622C17.9858 13.6622 18.3626 14.039 18.3626 14.5018C18.3626 14.9646 17.9858 15.3414 17.523 15.3414ZM6.477 15.3414C6.0142 15.3414 5.6374 14.9646 5.6374 14.5018C5.6374 14.039 6.0142 13.6622 6.477 13.6622C6.9398 13.6622 7.3166 14.039 7.3166 14.5018C7.3166 14.9646 6.9398 15.3414 6.477 15.3414ZM17.9738 9.8732L19.5768 7.0968C19.689 6.9026 19.6226 6.6548 19.4284 6.5426C19.2342 6.4304 18.9864 6.4968 18.8742 6.691L17.2332 9.5332C15.6568 8.8134 13.882 8.409 12 8.409C10.118 8.409 8.3432 8.8134 6.7668 9.5332L5.1258 6.691C5.0136 6.4968 4.7658 6.4304 4.5716 6.5426C4.3774 6.6548 4.311 6.9026 4.4232 7.0968L6.0262 9.8732C2.6288 11.724 0.3234 15.176 0 19.2H24C23.6766 15.176 21.3712 11.724 17.9738 9.8732Z"/>
-                    </svg>
-                    <span>Télécharger l'APK Android</span>
-                </a>
-                
+        <div id="telecharger" class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="https://fazad-colab.github.io/Omnimath.dev/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 rounded-2xl font-bold text-slate-950 bg-gradient-to-r from-sky-400 to-emerald-400 hover:from-sky-300 hover:to-emerald-300 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 transition-all transform hover:-translate-y-1 flex items-center justify-center space-x-3">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.523 15.3414C17.0602 15.3414 16.6834 14.9646 16.6834 14.5018C16.6834 14.039 17.0602 13.6622 17.523 13.6622C17.9858 13.6622 18.3626 14.039 18.3626 14.5018C18.3626 14.9646 17.9858 15.3414 17.523 15.3414ZM6.477 15.3414C6.0142 15.3414 5.6374 14.9646 5.6374 14.5018C5.6374 14.039 6.0142 13.6622 6.477 13.6622C6.9398 13.6622 7.3166 14.039 7.3166 14.5018C7.3166 14.9646 6.9398 15.3414 6.477 15.3414ZM17.9738 9.8732L19.5768 7.0968C19.689 6.9026 19.6226 6.6548 19.4284 6.5426C19.2342 6.4304 18.9864 6.4968 18.8742 6.691L17.2332 9.5332C15.6568 8.8134 13.882 8.409 12 8.409C10.118 8.409 8.3432 8.8134 6.7668 9.5332L5.1258 6.691C5.0136 6.4968 4.7658 6.4304 4.5716 6.5426C4.3774 6.6548 4.311 6.9026 4.4232 7.0968L6.0262 9.8732C2.6288 11.724 0.3234 15.176 0 19.2H24C23.6766 15.176 21.3712 11.724 17.9738 9.8732Z"/>
+        </svg>
+        <span>Télécharger l'APK Android</span>
+    </a>
+              
                 <a href="#lecons" class="w-full sm:w-auto px-8 py-4 rounded-2xl font-semibold text-white glass-card hover:bg-slate-800/80 transition-all flex items-center justify-center space-x-2 border border-slate-700">
                     <span>Explorer le catalogue de cours</span>
                     <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -660,8 +662,8 @@
             </p>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-                <!-- WhatsApp Card -->
-                <a href="https://wa.me/" target="_blank" class="glass-card p-6 rounded-2xl border border-emerald-500/30 hover:border-emerald-500 transition-all text-left group">
+                <!-- WhatsApp Card - Lien sécurisé avec rel="noopener noreferrer" -->
+                <a href="https://wa.me/" target="_blank" rel="noopener noreferrer" class="glass-card p-6 rounded-2xl border border-emerald-500/30 hover:border-emerald-500 transition-all text-left group">
                     <div class="flex items-center space-x-4 mb-3">
                         <div class="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
