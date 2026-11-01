@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Omnimath.dev | Math Quiz Comores</title>
+    <meta
+      name="description"
+      content="Omnimath.dev - plateforme éducative aux Comores dédiée aux cours, quiz, tableau de bord, progression utilisateur et mascotte pédagogique."
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: "#f0f9ff",
+                100: "#e0f2fe",
+                200: "#bae6fd",
+                300: "#7dd3fc",
+                400: "#38bdf8",
+                500: "#0ea5e9",
+                600: "#0284c7",
+                700: "#0369a1",
+                800: "#075985",
+                900: "#0c4a6e"
+              }
+            },
+            boxShadow: {
+              glow: "0 0 35px rgba(74, 222, 128, 0.28)",
+              soft: "0 30px 80px rgba(15, 23, 42, 0.5)"
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body class="bg-slate-950 text-slate-100">
+    <nav class="sticky top-0 z-50 border-b border-slate-800/80 glass">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-full gradient-bg p-0.5 shadow-glow">
+              <div class="w-full h-full rounded-full bg-slate-950 flex items-center justify-center font-black text-lg text-sky-400">O</div>
+            </div>
+            <div>
+              <div class="text-xl font-black tracking-tight">
+                OMNIMATH<span class="gradient-text">.dev</span>
+              </div>
+              <div class="hidden sm:block text-[10px] uppercase tracking-[0.22em] text-emerald-400">EdTech Comores</div>
+            </div>
+          </div>
+
+          <div class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
+            <a href="#accueil" class="nav-link hover:text-white transition">Accueil</a>
+            <a href="#produit" class="nav-link hover:text-white transition">Produit</a>
+            <a href="#cours" class="nav-link hover:text-white transition">Cours</a>
+            <a href="#dashboard" class="nav-link hover:text-white transition">Tableau de bord</a>
+            <a href="#demo" class="nav-link hover:text-white transition">Quiz</a>
+            <a href="#repeaux" class="nav-link hover:text-white transition">Réseaux</a>
+            <a href="#echange" class="nav-link hover:text-white transition">Échanges</a>
+            <a href="#auth" class="nav-link hover:text-white transition">Compte</a>
+            <a href="#contact" class="nav-link hover:text-white transition">Contact</a>
+          </div>
+
+          <div>
+            <a href="#telecharger" class="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-gradient-to-r from-sky-400 to-emerald-400 text-slate-950 text-sm font-bold shadow-glow hover:scale-[1.02] transition">
+              Obtenir l'APK
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <header id="accueil" class="relative overflow-hidden bg-grid">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.16),transparent_25%),radial-gradient(circle_at_bottom_right,_rgba(34,197,94,0.18),transparent_25%)]"></div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+        <div class="text-center">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-700 bg-slate-900/80 text-xs text-slate-300">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot"></span>
+            Plateforme fondée et développée par Fazad Nassur
+          </div>
+
+          <h1 class="mt-8 text-4xl sm:text-6xl lg:text-7xl font-black leading-tight">
+            Apprentissage mathématique
+            <span class="gradient-text block">du collège à l’université</span>
+          </h1>
+
+          <p class="mt-6 max-w-3xl mx-auto text-base sm:text-lg text-slate-300 leading-relaxed">
+            Omnimath.dev propose des parcours structurés, des quiz intelligents, des démonstrations pédagogiques et une expérience d’apprentissage conçue pour les élèves et étudiants aux Comores.
+          </p>
+
+          <div id="telecharger" class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="https://github.com/fazad-colab/MonQuizKivy" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 rounded-2xl font-black bg-gradient-to-r from-sky-400 to-emerald-400 text-slate-950 shadow-glow">
+              📱 Voir le dépôt MonQuizKivy
+            </a>
+            <a href="#cours" class="w-full sm:w-auto px-8 py-4 rounded-2xl font-semibold border border-slate-700 bg-slate-900/80 text-white hover:border-sky-500 transition">
+              ⮕ Explorer les cours
+            </a>
+          </div>
+
+          <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-8 border-t border-slate-800">
+            <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+              <div class="text-2xl font-black text-sky-400">100%</div>
+              <div class="text-xs text-slate-400 mt-1">Gratuit</div>
+            </div>
+            <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+              <div class="text-2xl font-black text-emerald-400">Hors ligne</div>
+              <div class="text-xs text-slate-400 mt-1">Sans connexion</div>
+            </div>
+            <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+              <div class="text-2xl font-black text-sky-400">Collège → L2</div>
+              <div class="text-xs text-slate-400 mt-1">Tous niveaux</div>
+            </div>
+            <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+              <div class="text-2xl font-black text-emerald-400">Quiz</div>
+              <div class="text-xs text-slate-400 mt-1">Math + pédagogie</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="produit" class="py-20 border-t border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-3xl mx-auto mb-14">
+            <div class="section-title">Notre produit phare</div>
+            <h2 class="mt-3 text-3xl sm:text-4xl font-black text-white">Math Quiz Comores</h2>
+            <p class="mt-4 text-slate-400">
+              Un environnement numérique pensé pour rendre les maths plus accessibles, plus motivantes et plus efficaces pour les élèves aux Comores.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/60 p-6 card-hover">
+              <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl mb-6">✓</div>
+              <h3 class="text-xl font-bold text-white mb-3">Quiz adaptatifs</h3>
+              <p class="text-slate-400 leading-relaxed">
+                Défis personnalisés selon le niveau, la classe et le chapitre choisi.
+              </p>
+            </div>
+
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/60 p-6 card-hover">
+              <div class="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center text-xl mb-6">★</div>
+              <h3 class="text-xl font-bold text-white mb-3">Cours détaillés</h3>
+              <p class="text-slate-400 leading-relaxed">
+                Chaque chapitre contient une vraie explication théorique et des exemples simples.
+              </p>
+            </div>
+
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/60 p-6 card-hover">
+              <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center text-xl mb-6">⚡</div>
+              <h3 class="text-xl font-bold text-white mb-3">Suivi de progression</h3>
+              <p class="text-slate-400 leading-relaxed">
+                Scores, combos, démonstrations, progression par niveau et par classe.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="cours" class="py-20 bg-slate-950 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-3xl mx-auto mb-10">
+            <div class="section-title">Catalogue scolaire</div>
+            <h2 class="mt-3 text-3xl sm:text-4xl font-black text-white">Choisissez votre niveau puis votre classe</h2>
+            <p class="mt-4 text-slate-400">
+              Le parcours est structuré par niveau, puis par classe. Cela permet de proposer des cours et des quiz plus pertinents.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/60 p-6">
+              <label class="block text-xs font-bold uppercase tracking-[0.18em] text-slate-300 mb-2">Niveau</label>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="levelButtons">
+                <button class="level-btn active px-3 py-2.5 rounded-xl text-sm font-bold border border-slate-700 bg-slate-900 text-slate-200" data-level="college">Collège</button>
+                <button class="level-btn px-3 py-2.5 rounded-xl text-sm font-bold border border-slate-700 bg-slate-900 text-slate-200" data-level="lycee">Lycée</button>
+                <button class="level-btn px-3 py-2.5 rounded-xl text-sm font-bold border border-slate-700 bg-slate-900 text-slate-200" data-level="universite">Université</button>
+              </div>
+            </div>
+
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/60 p-6">
+              <label class="block text-xs font-bold uppercase tracking-[0.18em] text-slate-300 mb-2">Classe</label>
+              <select id="classSelect" class="w-full rounded-xl border border-slate-700 bg-slate-950 text-white px-4 py-3 focus:border-sky-500 outline-none"></select>
+            </div>
+          </div>
+
+          <div class="mt-8 rounded-3xl border border-slate-800 bg-slate-900/60 p-6">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div>
+                <div class="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Nombre de questions</div>
+                <div class="text-sm text-slate-300 mt-1">Choisissez la durée de votre entraînement</div>
+              </div>
+
+              <div class="flex flex-wrap gap-2" id="questionCountSelector">
+                <button class="question-count-btn rounded-xl border border-slate-700 bg-slate-950 text-slate-200 px-4 py-2 text-sm font-bold" data-count="3">3</button>
+                <button class="question-count-btn rounded-xl border border-slate-700 bg-slate-950 text-slate-200 px-4 py-2 text-sm font-bold" data-count="5">5</button>
+                <button class="question-count-btn rounded-xl border border-slate-700 bg-slate-950 text-slate-200 px-4 py-2 text-sm font-bold" data-count="10">10</button>
+                <button class="question-count-btn rounded-xl border border-slate-700 bg-slate-950 text-slate-200 px-4 py-2 text-sm font-bold" data-count="15">15</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="coursesContainer" class="mt-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"></div>
+        </div>
+      </section>
+
+      <section id="dashboard" class="py-20 border-y border-slate-800 bg-slate-950/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between flex-wrap gap-4 mb-10">
+            <div>
+              <div class="section-title">Mon tableau de bord</div>
+              <h2 class="mt-3 text-3xl sm:text-4xl font-black text-white">Progression & performance</h2>
+            </div>
+            <div class="accent-pill px-4 py-2 rounded-full text-sm font-semibold text-sky-300">
+              Session active : <span id="sessionState">En ligne</span>
+            </div>
+          </div>
+
+          <div class="dashboard-shell grid grid-cols-1 xl:grid-cols-[1.4fr_0.8fr] gap-8">
+            <div class="space-y-6">
+              <div class="stats-grid grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+                <div class="stat-card">
+                  <div class="stat-label">Score moyen</div>
+                  <div class="stat-value" id="statScore">0%</div>
+                  <div class="stat-trend positive">+10% ce mois</div>
+                </div>
+
+                <div class="stat-card">
+                  <div class="stat-label">Combo max</div>
+                  <div class="stat-value" id="statCombo">x0</div>
+                  <div class="stat-trend positive">Record actuel</div>
+                </div>
+
+                <div class="stat-card">
+                  <div class="stat-label">Sessions</div>
+                  <div class="stat-value" id="statSessions">0</div>
+                  <div class="stat-trend positive">+4 ce jour</div>
+                </div>
+
+                <div class="stat-card">
+                  <div class="stat-label">Cours lus</div>
+                  <div class="stat-value" id="statCourses">0</div>
+                  <div class="stat-trend positive">En progression</div>
+                </div>
+              </div>
+
+              <div class="chart-panel">
+                <div class="panel-head">
+                  <div>
+                    <div class="text-xs uppercase tracking-[0.16em] text-slate-400">Performance</div>
+                    <div class="text-xl font-bold text-white">Évolution hebdomadaire</div>
+                  </div>
+                  <div class="text-sm text-emerald-400">+12.5%</div>
+                </div>
+
+                <div class="bars">
+                  <div class="bar-group">
+                    <span class="bar" style="height: 30%"></span>
+                    <label>L</label>
+                  </div>
+                  <div class="bar-group">
+                    <span class="bar" style="height: 42%"></span>
+                    <label>M</label>
+                  </div>
+                  <div class="bar-group">
+                    <span class="bar" style="height: 58%"></span>
+                    <label>M</label>
+                  </div>
+                  <div class="bar-group">
+                    <span class="bar" style="height: 71%"></span>
+                    <label>J</label>
+                  </div>
+                  <div class="bar-group">
+                    <span class="bar" style="height: 64%"></span>
+                    <label>V</label>
+                  </div>
+                  <div class="bar-group">
+                    <span class="bar" style="height: 88%"></span>
+                    <label>S</label>
+                  </div>
+                  <div class="bar-group">
+                    <span class="bar" style="height: 96%"></span>
+                    <label>D</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="recent-panel">
+                <div class="panel-head">
+                  <div>
+                    <div class="text-xs uppercase tracking-[0.16em] text-slate-400">Activités</div>
+                    <div class="text-xl font-bold text-white">Dernières actions</div>
+                  </div>
+                </div>
+
+                <ul class="activity-list">
+                  <li><span class="dot green"></span> Quiz "Équations du 1er degré" terminé</li>
+                  <li><span class="dot blue"></span> Cours "PGCD" consulté</li>
+                  <li><span class="dot gold"></span> Combo atteint : x5</li>
+                  <li><span class="dot purple"></span> Nouveau niveau : Lycée / Seconde</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="owl-panel">
+              <div class="owl-card">
+                <div class="owl-mascot">
+                  <div class="owl-head">
+                    <div class="owl-ear left"></div>
+                    <div class="owl-ear right"></div>
+                    <div class="owl-face">
+                      <div class="owl-eye left">
+                        <div class="pupil"></div>
+                      </div>
+                      <div class="owl-eye right">
+                        <div class="pupil"></div>
+                      </div>
+                      <div class="owl-beak"></div>
+                    </div>
+                  </div>
+                  <div class="owl-body">
+                    <div class="owl-body-inner"></div>
+                  </div>
+                  <div class="owl-wing left"></div>
+                  <div class="owl-wing right"></div>
+                </div>
+
+                <div class="owl-message">
+                  <div class="text-xs uppercase tracking-[0.18em] text-sky-400">Mascotte</div>
+                  <h3 class="text-2xl font-black text-white mt-3">Hibou Locky</h3>
+                  <p class="mt-2 text-sm text-slate-300 leading-relaxed">
+                    “Continue tes entraînements, la constance fait gagner les meilleurs scores.”
+                  </p>
+                </div>
+
+                <div class="mini-score">
+                  <div class="mini-score-label">Niveau actuel</div>
+                  <div class="mini-score-value">Lycée • Seconde</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="demo" class="py-20">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-10">
+            <div class="section-title">Démo interactive</div>
+            <h2 class="mt-3 text-3xl sm:text-4xl font-black text-white">Mini-moteur de quiz</h2>
+          </div>
+
+          <div id="quizApp" class="rounded-3xl border border-slate-800 bg-slate-900/80 p-5 sm:p-8 shadow-soft">
+            <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-800">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl gradient-bg flex items-center justify-center font-black text-slate-950 shadow-glow">L</div>
+                <div>
+                  <div class="text-sm font-bold text-white">Locky</div>
+                  <div class="text-xs text-slate-400">Mascotte pédagogique</div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <div id="comboBadge" class="combo-badge hidden px-3 py-1.5 rounded-full text-xs font-black">🔥 Combo x1</div>
+                <div class="text-xs text-slate-300 bg-slate-800 px-3 py-1.5 rounded-full">
+                  Question <span id="currentIndexView">0</span> / <span id="totalQuestionsView">0</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="progress-bar mb-6">
+              <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+            </div>
+
+            <div id="quizQuestionBlock">
+              <h3 id="quizQuestion" class="text-xl sm:text-2xl font-bold text-white leading-relaxed mb-6">
+                Sélectionnez une session pour commencer.
+              </h3>
+              <div id="quizOptions" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+            </div>
+
+            <div id="quizExplanationBox" class="hidden mt-6 rounded-2xl border border-slate-700 bg-slate-950/80 p-5">
+              <div class="flex items-center justify-between mb-3">
+                <div id="resultTitle" class="text-lg font-black text-emerald-300"></div>
+                <button id="toggleDetailBtn" class="text-xs text-sky-400 hover:text-sky-300 font-bold">
+                  Voir la démonstration
+                </button>
+              </div>
+
+              <div id="resultText" class="text-slate-300 leading-relaxed"></div>
+
+              <div id="detailedExplanation" class="hidden mt-4 rounded-xl border border-sky-500/20 bg-sky-500/5 p-4">
+                <div class="text-xs font-bold uppercase tracking-[0.16em] text-sky-400 mb-2">Démonstration</div>
+                <div id="detailedExplanationText" class="text-sm text-slate-300 leading-relaxed"></div>
+              </div>
+            </div>
+
+            <div id="quizResultBlock" class="hidden mt-6">
+              <div class="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-5">
+                <div id="quizResultTitle" class="text-xl font-black text-emerald-300 mb-2"></div>
+                <div id="quizResultText" class="text-slate-300 leading-relaxed"></div>
+              </div>
+              <div class="mt-6 flex justify-center">
+                <button id="nextQuestionBtn" class="px-6 py-3 rounded-xl font-bold bg-gradient-to-r from-sky-400 to-emerald-400 text-slate-950">
+                  Question suivante
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="auth" class="py-20 border-t border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-10">
+            <div class="section-title">Compte utilisateur</div>
+            <h2 class="mt-3 text-3xl sm:text-4xl font-black text-white">Connexion & inscription</h2>
+          </div>
+
+          <div class="grid grid-cols-1 xl:grid-cols-[1.1fr_0.9fr] gap-8">
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/80 p-6 shadow-soft">
+              <div class="flex gap-3 mb-6">
+                <button id="showLoginTab" class="tab-btn active flex-1 rounded-xl px-4 py-3 font-bold">Connexion</button>
+                <button id="showRegisterTab" class="tab-btn flex-1 rounded-xl px-4 py-3 font-bold">Inscription</button>
+              </div>
+
+              <div id="loginFormBox">
+                <form id="loginForm" class="space-y-4">
+                  <div>
+                    <label class="block text-xs uppercase tracking-[0.18em] text-slate-300 mb-2">Pseudo</label>
+                    <input type="text" id="loginPseudo" class="w-full rounded-xl border border-slate-700 bg-slate-950 text-white px-4 py-3 focus:border-sky-500 outline-none" placeholder="Votre pseudo" required />
+                  </div>
+
+                  <div>
+                    <label class="block text-xs uppercase tracking-[0.18em] text-slate-300 mb-2">Mot de passe</label>
+                    <input type="password" id="loginPassword" class="w-full rounded-xl border border-slate-700 bg-slate-950 text-white px-4 py-3 focus:border-sky-500 outline-none" placeholder="Votre mot de passe" required />
+                  </div>
+
+                  <button type="submit" class="w-full px-6 py-3 rounded-xl font-bold bg-gradient-to-r from-sky-400 to-emerald-400 text-slate-950">
+                    Se connecter
+                  </button>
+                </form>
+              </div>
+
+              <div id="registerFormBox" class="hidden">
+                <form id="registerForm" class="space-y-4">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-xs uppercase tracking-[0.18em] text-slate-300 mb-2">Pseudo</label>
+                      <input type="text" id="regPseudo" class="w-full rounded-xl border border-slate-700 bg-slate-950 text-white px-4 py-3 focus:border-sky-500 outline-none" placeholder="Choisir un pseudo" required />
+                    </div>
+
+                    <div>
+                      <label class="block text-xs uppercase tracking-[0.18em] text-slate-300 mb-2">Mot de passe</label>
+                      <input type="password" id="regPassword" class="w-full rounded-xl border border-slate-700 bg-slate-950 text-white px-4 py-3 focus:border-sky-500 outline-none" placeholder="Mot de passe" required />
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-xs uppercase tracking-[0.18em] text-slate-300 mb-2">Âge</label>
+                      <input type="number" id="regAge" class="w-full rounded-xl border border-slate-700 bg-slate-950 text-white px-4 py-3 focus:border-sky-500 outline-none" min="8" max="80" placeholder="Ex: 16" required />
+                    </div>
+
+                    <div>
+                      <label class="block text-xs uppercase tracking-[0.18em] text-slate-300 mb-2">Classe réelle</label>
+                      <select id="regClass" class="w-full rounded-xl border border-slate-700 bg-slate-950 text-white px-4 py-3 focus:border-sky-500 outline-none" required>
+                        <option value="">Choisir</option>
+                        <option value="6e">6e</option>
+                        <option value="5e">5e</option>
+                        <option value="4e">4e</option>
+                        <option value="3e">3e</option>
+                        <option value="Seconde">Seconde</option>
+                        <option value="Première">Première</option>
+                        <option value="Terminale">Terminale</option>
+                        <option value="L1">L1</option>
+                        <option value="L2">L2</option>
+                        <option value="L3">L3</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-xs uppercase tracking-[0.18em] text-slate-300 mb-2">Sexe</label>
+                      <select id="regSex" class="w-full rounded-xl border border-slate-700 bg-slate-950 text-white px-4 py-3 focus:border-sky-500 outline-none" required>
+                        <option value="">Choisir</option>
+                        <option value="Homme">Homme</option>
+                        <option value="Femme">Femme</option>
+                        <option value="Autre">Autre</option>
+                        <option value="Je préfère ne pas dire">Je préfère ne pas dire</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label class="block text-xs uppercase tracking-[0.18em] text-slate-300 mb-2">Où avez-vous entendu parler de Omnimath ?</label>
+                      <select id="regSource" class="w-full rounded-xl border border-slate-700 bg-slate-950 text-white px-4 py-3 focus:border-sky-500 outline-none" required>
+                        <option value="">Choisir</option>
+                        <option value="Google">Google</option>
+                        <option value="YouTube">YouTube</option>
+                        <option value="Facebook">Facebook</option>
+                        <option value="Ami">Ami</option>
+                        <option value="Autre">Autre</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="w-full px-6 py-3 rounded-xl font-bold bg-gradient-to-r from-emerald-400 to-sky-400 text-slate-950">
+                    S'enregistrer
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <div id="userProfilePanel" class="rounded-3xl border border-slate-800 bg-slate-900/80 p-6 shadow-soft hidden">
+              <div class="flex items-center justify-between gap-4">
+                <div>
+                  <div class="text-xs uppercase tracking-[0.18em] text-sky-400">Profil</div>
+                  <h3 id="profilePseudo" class="text-2xl font-black text-white mt-2">Pseudo</h3>
+                </div>
+                <button id="logoutBtn" class="px-4 py-2 rounded-xl border border-slate-700 bg-slate-950 text-slate-200">Déconnexion</button>
+              </div>
+
+              <div class="mt-6 space-y-4">
+                <div class="rounded-2xl border border-slate-800 bg-slate-950/80 p-4">
+                  <div class="text-xs uppercase tracking-[0.18em] text-slate-400">Niveau</div>
+                  <div id="profileLevel" class="text-3xl font-black text-emerald-400 mt-2">Niveau 1</div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="rounded-2xl border border-slate-800 bg-slate-950/80 p-4">
+                    <div class="text-xs uppercase tracking-[0.18em] text-slate-400">XP</div>
+                    <div id="profileXp" class="text-xl font-black text-sky-400 mt-2">0</div>
+                  </div>
+
+                  <div class="rounded-2xl border border-slate-800 bg-slate-950/80 p-4">
+                    <div class="text-xs uppercase tracking-[0.18em] text-slate-400">Meilleur score</div>
+                    <div id="profileBest" class="text-xl font-black text-emerald-400 mt-2">0%</div>
+                  </div>
+                </div>
+
+                <div class="rounded-2xl border border-slate-800 bg-slate-950/80 p-4">
+                  <div class="text-xs uppercase tracking-[0.18em] text-slate-400">Informations</div>
+                  <div class="mt-3 text-sm text-slate-300 space-y-1">
+                    <div>Âge : <span id="profileAge">-</span></div>
+                    <div>Classe : <span id="profileClass">-</span></div>
+                    <div>Sexe : <span id="profileSex">-</span></div>
+                    <div>Source : <span id="profileSource">-</span></div>
+                  </div>
+                </div>
+
+                <div class="rounded-2xl border border-slate-800 bg-slate-950/80 p-4">
+                  <div class="text-xs uppercase tracking-[0.18em] text-slate-400">Notification</div>
+                  <button id="notifyBtn" class="mt-3 w-full px-4 py-2 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-300 font-bold">
+                    Autoriser les rappels
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-20 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-12">
+            <div class="section-title">Pourquoi cette plateforme</div>
+            <h2 class="mt-3 text-3xl sm:text-4xl font-black text-white">Une pédagogie pensée pour la réussite</h2>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/60 p-6">
+              <div class="w-12 h-12 rounded-2xl bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center text-xl mb-4">01</div>
+              <h3 class="text-xl font-bold text-white mb-3">Progression claire</h3>
+              <p class="text-slate-400">L’élève avance selon son niveau, sa classe et le chapitre choisi.</p>
+            </div>
+
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/60 p-6">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl mb-4">02</div>
+              <h3 class="text-xl font-bold text-white mb-3">Moteur de quiz</h3>
+              <p class="text-slate-400">Une vraie logique de quiz active, suivie d’un retour immédiat sur la réponse.</p>
+            </div>
+
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/60 p-6">
+              <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center text-xl mb-4">03</div>
+              <h3 class="text-xl font-bold text-white mb-3">Projet local</h3>
+              <p class="text-slate-400">Une plateforme conçue dans un contexte éducatif concret, utile et compatible avec la réalité locale.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="repeaux" class="py-20 bg-slate-900/70 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-12">
+            <div class="section-title">Réseaux & communication</div>
+            <h2 class="mt-3 text-3xl sm:text-4xl font-black text-white">Suivez, rejoignez et communiquez avec Omnimath</h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <a href="https://fazad-colab.github.io/Omnimath.dev/" target="_blank" rel="noopener noreferrer" class="social-card rounded-3xl border border-slate-800 bg-slate-950/80 p-6 transition">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-sky-500/10 border border-sky-500/30 text-sky-400 flex items-center justify-center text-2xl">🌐</div>
+                <div>
+                  <div class="font-bold text-white">Site Web</div>
+                  <div class="text-xs text-slate-400">Omnimath.dev</div>
+                </div>
+              </div>
+              <p class="text-sm text-slate-300">La vitrine web interactive pour accéder aux leçons structurées, aux quiz et télécharger l’application mobile officielle.</p>
+            </a>
+
+            <a href="https://www.google.com/search?q=Omnimath" target="_blank" rel="noopener noreferrer" class="social-card rounded-3xl border border-slate-800 bg-slate-950/80 p-6 transition">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-2xl">🔍</div>
+                <div>
+                  <div class="font-bold text-white">Recherche Google</div>
+                  <div class="text-xs text-slate-400">Omnimath</div>
+                </div>
+              </div>
+              <p class="text-sm text-slate-300">Pour retrouver facilement la plateforme en ligne et suivre les résultats de recherche liés au projet.</p>
+            </a>
+
+            <a href="https://www.youtube.com/@Omnimath.14" target="_blank" rel="noopener noreferrer" class="social-card rounded-3xl border border-slate-800 bg-slate-950/80 p-6 transition">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center text-2xl">🎥</div>
+                <div>
+                  <div class="font-bold text-white">YouTube</div>
+                  <div class="text-xs text-slate-400">@Omnimath.14</div>
+                </div>
+              </div>
+              <p class="text-sm text-slate-300">Pour suivre nos tutoriels vidéo et les démonstrations mathématiques.</p>
+            </a>
+
+            <a href="https://www.fb.com/l/6lp1kJRRR" target="_blank" rel="noopener noreferrer" class="social-card rounded-3xl border border-slate-800 bg-slate-950/80 p-6 transition">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-blue-400 flex items-center justify-center text-2xl">💬</div>
+                <div>
+                  <div class="font-bold text-white">Facebook</div>
+                  <div class="text-xs text-slate-400">Actualités & discussion</div>
+                </div>
+              </div>
+              <p class="text-sm text-slate-300">Pour échanger avec la communauté et suivre les nouveautés du projet.</p>
+            </a>
+
+            <a href="https://github.com/fazad-colab/MonQuizKivy" target="_blank" rel="noopener noreferrer" class="social-card rounded-3xl border border-slate-800 bg-slate-950/80 p-6 transition">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-slate-500/10 border border-slate-500/30 text-slate-300 flex items-center justify-center text-2xl">💻</div>
+                <div>
+                  <div class="font-bold text-white">GitHub</div>
+                  <div class="text-xs text-slate-400">MonQuizKivy</div>
+                </div>
+              </div>
+              <p class="text-sm text-slate-300">Le dépôt de développement et de sauvegarde de l’application mobile.</p>
+            </a>
+
+            <a href="https://github.com/fazad-colab/MonQuizKivy/commits/v1.4.20" target="_blank" rel="noopener noreferrer" class="social-card rounded-3xl border border-slate-800 bg-slate-950/80 p-6 transition">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 flex items-center justify-center text-2xl">📈</div>
+                <div>
+                  <div class="font-bold text-white">Journal technique</div>
+                  <div class="text-xs text-slate-400">Commits v1.4.20</div>
+                </div>
+              </div>
+              <p class="text-sm text-slate-300">Pour suivre l’historique précis des mises à jour et des améliorations du code.</p>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="echange" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-3xl mx-auto mb-10">
+            <div class="section-title">Échanges & avis</div>
+            <h2 class="mt-3 text-3xl sm:text-4xl font-black text-white">La communauté nous dit ce qu’elle pense</h2>
+            <p class="mt-4 text-slate-400">
+              Vos avis nous aident à améliorer la plateforme, les cours et le moteur de quiz.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6">
+              <div class="text-emerald-400 text-2xl mb-3">★★★★★</div>
+              <p class="text-slate-300 italic leading-relaxed">
+                “Très bon concept. Les cours sont clairs et la logique du quiz est motivante.”
+              </p>
+              <div class="mt-5 text-sm text-slate-400">
+                <div class="font-bold text-white">M. Ibrahim</div>
+                <div>Étudiant en lycée</div>
+              </div>
+            </div>
+
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6">
+              <div class="text-emerald-400 text-2xl mb-3">★★★★★</div>
+              <p class="text-slate-300 italic leading-relaxed">
+                “Le système de démonstration est très utile. On comprend vraiment où l’on s’est trompé.”
+              </p>
+              <div class="mt-5 text-sm text-slate-400">
+                <div class="font-bold text-white">A. Said</div>
+                <div>Collégien</div>
+              </div>
+            </div>
+
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6">
+              <div class="text-emerald-400 text-2xl mb-3">★★★★★</div>
+              <p class="text-slate-300 italic leading-relaxed">
+                “Un projet utile pour les Comores. Il répond à une vraie problématique éducative.”
+              </p>
+              <div class="mt-5 text-sm text-slate-400">
+                <div class="font-bold text-white">N. Fadhl</div>
+                <div>Étudiant universitaire</div>
+              </div>
+            </div>
+          </div>
+
+          <div id="contact" class="rounded-3xl border border-slate-800 bg-slate-900/70 p-6 sm:p-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div>
+                <div class="section-title">Nous écrire</div>
+                <h3 class="mt-3 text-3xl font-black text-white">Envoyez votre message</h3>
+                <p class="mt-4 text-slate-400">
+                  Partagez votre avis, votre retour, votre suggestion ou votre besoin de collaboration.
+                </p>
+
+                <div class="mt-6 space-y-3">
+                  <div class="rounded-2xl border border-slate-800 bg-slate-950/80 p-4">
+                    <div class="text-xs uppercase tracking-[0.16em] text-slate-400 mb-1">Email</div>
+                    <div class="font-medium text-sky-400">Omnimath.dev@gmail.com</div>
+                  </div>
+                  <div class="rounded-2xl border border-slate-800 bg-slate-950/80 p-4">
+                    <div class="text-xs uppercase tracking-[0.16em] text-slate-400 mb-1">Téléphone / contact</div>
+                    <div class="font-medium text-slate-200">À définir selon le projet</div>
+                  </div>
+                </div>
+              </div>
+
+              <form action="mailto:Omnimath.dev@gmail.com" method="post" enctype="text/plain" class="space-y-4">
+                <div>
+                  <label class="block text-xs uppercase tracking-[0.18em] text-slate-300 mb-2">Nom</label>
+                  <input type="text" name="nom" class="w-full rounded-xl border border-slate-700 bg-slate-950 text-white px-4 py-3 focus:border-sky-500 outline-none" placeholder="Votre nom" />
+                </div>
+
+                <div>
+                  <label class="block text-xs uppercase tracking-[0.18em] text-slate-300 mb-2">Email</label>
+                  <input type="email" name="email" class="w-full rounded-xl border border-slate-700 bg-slate-950 text-white px-4 py-3 focus:border-sky-500 outline-none" placeholder="votre@email.com" />
+                </div>
+
+                <div>
+                  <label class="block text-xs uppercase tracking-[0.18em] text-slate-300 mb-2">Message</label>
+                  <textarea name="message" rows="5" class="w-full rounded-xl border border-slate-700 bg-slate-950 text-white px-4 py-3 focus:border-sky-500 outline-none" placeholder="Partagez votre avis, suggestion ou demande..."></textarea>
+                </div>
+
+                <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-xl font-bold bg-gradient-to-r from-sky-400 to-emerald-400 text-slate-950">
+                  Envoyer le message
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="border-t border-slate-800 bg-slate-950 py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-slate-500">
+        © 2026 Omnimath.dev — Tous droits réservés.
+        <div class="mt-2 text-slate-600">Développé aux Comores par Fazad Nassur</div>
+      </div>
+    </footer>
+
+    <div id="courseModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4">
+      <div class="w-full max-w-3xl rounded-3xl border border-slate-800 bg-slate-900/95 shadow-soft">
+        <div class="flex items-center justify-between p-5 border-b border-slate-800">
+          <div>
+            <div class="text-xs uppercase tracking-[0.18em] text-sky-400" id="modalLevel">Niveau</div>
+            <h3 id="modalTitle" class="text-2xl font-black text-white mt-2">Titre du cours</h3>
+          </div>
+          <button id="closeModalBtn" class="w-10 h-10 rounded-full bg-slate-800 text-slate-300 hover:text-white">✕</button>
+        </div>
+
+        <div class="p-6 modal-scroll max-h-[70vh] overflow-y-auto">
+          <div id="modalContent" class="text-slate-300 leading-relaxed space-y-4"></div>
+        </div>
+
+        <div class="flex items-center justify-between p-5 border-t border-slate-800">
+          <button id="modalCloseSecondary" class="px-4 py-2 rounded-xl border border-slate-700 bg-slate-900 text-slate-300">Fermer</button>
+          <button id="startCourseQuizBtn" class="px-5 py-2.5 rounded-xl font-bold bg-gradient-to-r from-sky-400 to-emerald-400 text-slate-950">S’entraîner</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
